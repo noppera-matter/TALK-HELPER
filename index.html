@@ -1,46 +1,770 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
-  <base href="/TALK-HELPER/">
-
-  <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
-
-  <!-- iOS meta tags & icons -->
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="talk_helper_app">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
-
-  <title>talk_helper_app</title>
-  <link rel="manifest" href="manifest.json">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#020617">
+<title>Social Shield v2.8.1</title>
+<style>
+:root{--bg:#020617;--card:#0f172a;--line:#1e293b;--text:#f1f5f9;--mute:#94a3b8;--dim:#7c8aa0;--ind:#6366f1;--ind2:#818cf8;--green:#34d399;--blue:#60a5fa;--red:#f87171;--orange:#fb923c;--yellow:#eab308}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",system-ui,sans-serif;-webkit-tap-highlight-color:transparent;padding-bottom:130px;overflow-x:hidden}
+button{font-family:inherit;cursor:pointer;border:none;color:inherit;background:none}
+.wrap{max-width:448px;margin:0 auto;padding:0 20px}
+header{display:flex;justify-content:space-between;align-items:center;padding:24px 0}
+h1{font-size:24px;font-weight:900;letter-spacing:-.02em;display:flex;align-items:center;gap:8px}
+.ver{font-size:12px;background:var(--ind);padding:2px 8px;border-radius:8px;font-weight:700}
+.sub{color:var(--dim);font-size:12px;margin-top:4px}
+.badge-ic{width:40px;height:40px;border-radius:50%;background:#1e293b;border:1px solid #334155;display:flex;align-items:center;justify-content:center;color:#818cf8}
+.card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:24px;margin-bottom:24px;position:relative;overflow:hidden}
+.card .bg{position:absolute;top:0;right:0;padding:16px;opacity:.1}
+.row{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:8px;position:relative}
+.row2{display:flex;justify-content:space-between;align-items:baseline;margin:4px 0 6px;position:relative}
+.lbl{color:var(--mute);font-size:12px;font-weight:700;letter-spacing:.1em}
+.pct{font-size:40px;font-weight:900}
+.pf{font-size:18px;font-weight:800;color:var(--blue)}
+.bar{width:100%;background:#020617;height:20px;border-radius:99px;border:1px solid var(--line);padding:4px;margin-bottom:12px}
+.bar.thin{height:12px;padding:2px;margin-bottom:14px}
+.fill{height:100%;border-radius:99px;transition:width .8s ease-out}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{font-size:12px;padding:6px 12px;border-radius:99px;font-weight:700;border:1px solid}
+.chip.i{color:#a5b4fc;background:rgba(99,102,241,.1);border-color:rgba(99,102,241,.25)}
+.chip.e{color:#6ee7b7;background:rgba(16,185,129,.1);border-color:rgba(16,185,129,.25)}
+.chip.g{color:#fcd34d;background:rgba(234,179,8,.1);border-color:rgba(234,179,8,.3)}
+.hint{font-size:12px;color:var(--dim);margin-top:12px;line-height:1.55}
+.tabs{display:flex;background:var(--card);padding:4px;border-radius:18px;border:1px solid var(--line);margin-bottom:24px}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:11px 0;border-radius:14px;font-size:12px;font-weight:700;color:var(--dim)}
+.tab.on{background:#1e293b;color:#fff;border:1px solid #334155;box-shadow:0 4px 12px rgba(0,0,0,.4)}
+.list{display:flex;flex-direction:column;gap:16px}
+.item{background:rgba(15,23,42,.55);border:1px solid var(--line);border-radius:24px;padding:20px;text-align:left;width:100%;color:inherit}
+.cat{font-size:12px;background:#1e293b;color:#818cf8;padding:4px 10px;border-radius:8px;font-weight:900}
+.why{font-size:12px;color:var(--green);font-weight:700}
+.mh{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:8px}
+.item h3{font-size:18px;font-weight:700;margin-bottom:4px}
+.item p{font-size:13px;color:var(--dim);line-height:1.5}
+.ex{margin-top:12px;border-top:1px solid var(--line);padding-top:10px}
+.ex summary{font-size:13px;font-weight:700;color:#a5b4fc;cursor:pointer;padding:4px 0}
+.ex .ln{margin-top:10px}
+.ex .ln b{display:block;font-size:12px;color:var(--mute);margin-bottom:2px}
+.ex .ln p{color:var(--text);font-size:14px}
+.use{margin-top:14px;width:100%;background:rgba(99,102,241,.15);color:#a5b4fc;border:1px solid rgba(99,102,241,.3);border-radius:14px;padding:11px;font-weight:700;font-size:13px}
+.selbox label{display:block;font-size:12px;font-weight:700;color:var(--mute);margin:0 4px 8px}
+select{width:100%;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;color:#fff;font:inherit;font-size:16px;outline:none}
+.sec{font-size:13px;font-weight:800;color:var(--mute);margin:4px 4px 0}
+.log{display:flex;align-items:center;gap:14px}
+.lic{padding:12px;border-radius:16px;display:flex}
+.lic.green{background:rgba(16,185,129,.1);color:var(--green)}
+.lic.blue{background:rgba(59,130,246,.1);color:var(--blue)}
+.lic.red{background:rgba(239,68,68,.1);color:var(--red)}
+.lbody{flex:1;min-width:0}
+.lt{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.lt h4{font-size:15px;font-weight:700;color:#e2e8f0}
+.date{font-size:12px;color:var(--dim)}
+.topic{font-size:13px;color:var(--mute);margin-top:2px;word-break:break-all}
+.topic.nx{color:#a5b4fc}
+.delta{font-size:12px;font-weight:800;color:var(--orange);white-space:nowrap}
+.ph{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.ph h3{font-size:20px;font-weight:900;margin:0}
+.pp{display:flex;align-items:center;gap:4px;color:var(--yellow);font-size:13px;font-weight:700;background:rgba(234,179,8,.1);padding:4px 12px;border-radius:99px;border:1px solid rgba(234,179,8,.25)}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.tag{font-size:12px;background:#1e293b;color:var(--mute);padding:4px 12px;border-radius:8px}
+.note{background:rgba(2,6,23,.5);padding:12px;border-radius:12px;border:1px solid rgba(30,41,59,.6);font-size:13px;color:var(--dim);font-style:italic;white-space:pre-wrap;word-break:break-all}
+.stat{font-size:12px;color:var(--dim);margin-top:10px}
+.empty{text-align:center;color:var(--dim);padding:40px 10px;font-size:14px;line-height:1.6}
+.empty.small{padding:12px 10px;font-size:13px}
+.btn{width:100%;padding:14px;border-radius:16px;font-weight:800;font-size:14px;border:1px solid #334155;background:#1e293b}
+.btn.pri{background:var(--ind);border-color:var(--ind);color:#fff}
+.btn.dan{color:var(--red);border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.08)}
+.btns{display:flex;gap:10px}
+.fab{position:fixed;bottom:28px;left:0;right:0;display:flex;justify-content:center;padding:0 20px;pointer-events:none}
+.fab button{pointer-events:auto;width:100%;max-width:384px;background:var(--ind);padding:18px 20px;border-radius:24px;box-shadow:0 20px 40px rgba(99,102,241,.4);display:flex;align-items:center;justify-content:space-between;color:#fff;text-align:left}
+.fab button:active{transform:scale(.96)}
+.fl{display:flex;align-items:center;gap:14px}
+.fp{background:rgba(255,255,255,.2);padding:8px;border-radius:12px;display:flex}
+.fs{font-size:11px;opacity:.8;font-weight:800;line-height:1}
+.ft{font-weight:700;font-size:16px}
+#overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:100;display:flex;align-items:flex-end;justify-content:center}
+#overlay[hidden]{display:none}
+.sheet{background:var(--card);width:100%;max-width:448px;max-height:92vh;overflow-y:auto;border-radius:36px 36px 0 0;padding:28px 24px 32px;border-top:1px solid var(--line);animation:up .28s ease-out}
+@keyframes up{from{transform:translateY(100%)}to{transform:none}}
+.sh{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
+.sh h2{font-size:20px;font-weight:900}
+.x{padding:8px;background:#1e293b;border-radius:50%;color:var(--mute);display:flex}
+form label{display:block;font-size:12px;font-weight:700;color:var(--mute);letter-spacing:.06em;margin:0 4px 8px}
+form .f{margin-bottom:20px}
+input,textarea{width:100%;background:#020617;border:1px solid var(--line);border-radius:16px;padding:14px;color:#fff;font:inherit;font-size:16px;outline:none}
+input:focus,textarea:focus,select:focus{border-color:var(--ind)}
+textarea{resize:none;height:72px}
+input[type=range]{padding:0;height:32px;accent-color:var(--ind);border:none;background:none}
+.rs{display:flex;gap:8px}
+.rb{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 4px;border-radius:16px;border:2px solid var(--line);background:#020617;opacity:.6;font-size:12px;font-weight:800}
+.rb small{font-size:11px;font-weight:600;color:var(--dim)}
+.rb.on{border-color:var(--ind);background:rgba(99,102,241,.1);opacity:1}
+.rb.green{color:var(--green)}.rb.blue{color:var(--blue)}.rb.red{color:var(--red)}
+.rb span{color:var(--text)}
+.rng{display:flex;align-items:center;gap:12px}
+.rng output{min-width:76px;text-align:right;font-weight:800;color:var(--yellow);font-size:14px}
+.h2{font-size:12px;color:var(--dim);margin:2px 4px 0}
+.err{color:var(--red);font-size:13px;font-weight:700;margin:-8px 4px 16px}
+.err[hidden]{display:none}
+.nb{border:1px solid var(--line);border-radius:16px;padding:12px 14px;margin-bottom:20px}
+.nb summary{font-weight:800;font-size:14px;color:#a5b4fc;cursor:pointer}
+.nb .f{margin:14px 0 0}
+.top{margin-bottom:16px}
+.bk{display:flex;gap:10px;margin-top:20px}
+.bk .btn{font-size:13px}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px}
+.kpi b{display:block;font-size:22px;font-weight:900}
+.kpi span{font-size:12px;color:var(--dim)}
+.rep{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:20px}
+.rep h3{font-size:15px;font-weight:800;margin-bottom:14px}
+.brow{display:grid;grid-template-columns:22px 1fr 40px;align-items:center;gap:10px;margin-bottom:8px}
+.bl{font-size:13px;color:var(--mute);font-weight:700}
+.bl.td{color:#fff}
+.bt{height:10px;background:#020617;border-radius:99px;overflow:hidden}
+.bf{height:100%;background:var(--ind2);border-radius:0 99px 99px 0}
+.bv{font-size:12px;color:var(--mute);text-align:right}
+.ins{font-size:14px;line-height:1.6;color:var(--text);padding-left:14px;position:relative;margin-bottom:8px}
+.ins:before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--ind2)}
+.prow{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-top:1px solid var(--line);font-size:14px}
+.prow:first-of-type{border-top:none}
+.prow span{color:var(--dim);font-size:12px;text-align:right}
+.rv{padding:10px 0;border-top:1px solid var(--line)}
+.rv:first-of-type{border-top:none}
+.rv b{font-size:13px;color:var(--mute)}
+.rv p{font-size:14px;color:#c7d2fe;margin-top:2px;word-break:break-all}
+.warn{background:rgba(251,146,60,.1);border:1px solid rgba(251,146,60,.3);color:#fdba74;border-radius:14px;padding:10px 14px;font-size:13px;margin-bottom:16px;line-height:1.5}
+</style>
 </head>
 <body>
-  <!--
-    You can customize the "flutter_bootstrap.js" script.
-    This is useful to provide a custom configuration to the Flutter loader
-    or to give the user feedback during the initialization process.
+<div class="wrap" id="app"></div>
+<div id="overlay" hidden></div>
+<input type="file" id="importFile" accept="application/json,.json,text/csv,.csv" hidden>
 
-    For more details:
-    * https://docs.flutter.dev/platform-integration/web/initialization
-  -->
-  <script src="flutter_bootstrap.js" async></script>
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- 데이터 ---------- */
+  // kw: 인물 관심사 태그와 연결하는 키워드 (2글자 이상)
+  var ALL_MISSIONS = [
+    { id: 1, topic: 'AI 비서 답장 기능', category: '디지털', description: '상대방의 기술 수용도 파악용',
+      opener: '요즘 AI로 메일이나 문서 쓰는 분들 많던데, 혹시 써보셨어요?', yes: '어떤 업무에서 제일 도움이 되던가요?', no: '저도 아직 이것저것 알아보는 중이에요.', kw: ['AI', '디지털', '테크', '컴퓨터'] },
+    { id: 2, topic: '혈당 관리 앱 유행', category: '건강', description: '식단 관심사 유도 질문',
+      opener: '요즘 식단 관리 앱 쓰는 분들 많더라고요. 혹시 써보신 거 있어요?', yes: '어떤 점이 제일 편하던가요?', no: '그냥 궁금해서 여쭤봤어요. 점심은 뭐 드셨어요?', kw: ['건강', '식단', '다이어트', '영양'] },
+    { id: 3, topic: '숏폼 챌린지', category: '콘텐츠', description: '도파민 취향 확인',
+      opener: '요즘 숏폼 챌린지 많이 도는데, 보다가 따라 해본 거 있어요?', yes: '그거 어디서 보셨어요? 저도 찾아볼래요.', no: '저도 보기만 해요. 요즘 뭐 재밌게 보세요?', kw: ['숏폼', '유튜브', '릴스', '틱톡', '영상', '콘텐츠'] },
+    { id: 4, topic: '요즘 유행하는 성격 테스트', category: '심리', description: '자연스러운 성격 및 성향 파악',
+      opener: '요즘 성격 테스트 다시 유행이던데, 해보신 적 있어요?', yes: '결과가 본인이랑 잘 맞던가요?', no: '저는 한 번 해봤는데 은근 재밌더라고요.', kw: ['성격', 'MBTI', '심리', '테스트'] },
+    { id: 5, topic: '최신 개봉 명작 영화', category: '문화', description: '취미 생활 관련 대화 유도',
+      opener: '요즘 볼만한 영화 찾고 있는데, 최근에 재밌게 본 거 있으세요?', yes: '어떤 장면이 제일 좋았어요?', no: '그럼 요즘은 영화보다 드라마 쪽이세요?', kw: ['영화', '극장', '시네마', '감독'] },
+    { id: 6, topic: '주말 근교 드라이브 코스', category: '여행', description: '라이프스타일 확인',
+      opener: '이번 주말에 근교로 바람 쐬러 가볼까 하는데, 가보셨던 곳 중에 괜찮은 데 있어요?', yes: '거기는 뭐가 제일 좋았어요?', no: '그럼 쉬는 날엔 집에서 쉬시는 편이세요?', kw: ['여행', '드라이브', '나들이', '자동차'] },
+    { id: 7, topic: '오피스 스트레칭 방법', category: '건강', description: '사무실 내 공감대 형성',
+      opener: '요즘 어깨가 너무 뻐근해서 스트레칭 찾아보고 있는데, 하시는 거 있어요?', yes: '그거 어떻게 하는 거예요? 한번 알려주세요.', no: '점심 먹고 잠깐 걷는 것만 해도 좀 풀리더라고요.', kw: ['스트레칭', '요가', '필라테스', '운동'] },
+    { id: 8, topic: '요즘 뜨는 배달 맛집', category: '식음료', description: '점심시간 식사 취향 확인',
+      opener: '오늘 점심 뭐 먹을지 고민인데, 요즘 자주 가시는 데 있어요?', yes: '거기는 뭐가 제일 맛있어요?', no: '그럼 저는 새로운 데 한번 가볼까봐요.', kw: ['맛집', '음식', '먹방', '먹거리', '디저트'] },
+    { id: 9, topic: 'OTT 신작 시리즈 추천', category: '문화', description: '퇴근 후 휴식 취향 파악',
+      opener: '요즘 퇴근하고 볼만한 시리즈 찾고 있는데, 최근에 재밌게 본 거 있어요?', yes: '몇 화까지 보셨어요? 스포는 말고요.', no: '그럼 요즘은 보는 것보다 다른 걸로 쉬세요?', kw: ['OTT', '넷플릭스', '드라마', '시리즈'] },
+    { id: 10, topic: '재택근무 vs 출근', category: '업무', description: '업무 스타일 및 가치관 확인',
+      opener: '재택이 좋다는 분도 있고 출근이 낫다는 분도 있던데, 어떠세요?', yes: '그럼 집중은 어디서 더 잘 되세요?', no: '저는 그때그때 달라요. 요즘 일은 좀 어떠세요?', kw: ['업무', '재택', '직장', '회사'] },
+    { id: 11, topic: '반려동물 이야기', category: '일상', description: '가볍고 따뜻한 공감대',
+      opener: '혹시 반려동물 키우세요? 요즘 사진 많이 올리는 분들 많더라고요.', yes: '이름이 뭐예요? 어떤 성격이에요?', no: '키우고 싶긴 한데 아직은 구경만 해요.', kw: ['고양이', '강아지', '반려', '동물', '펫'] },
+    { id: 12, topic: '커피·카페 취향', category: '식음료', description: '소소한 취향 확인',
+      opener: '커피 드시는 편이에요? 요즘 괜찮은 카페를 찾고 있어서요.', yes: '주로 어떤 메뉴 드세요?', no: '그럼 차 종류 좋아하세요?', kw: ['커피', '카페', '베이킹', '디저트'] },
+    { id: 13, topic: '일교차와 옷차림', category: '일상', description: '부담 없는 가벼운 시작',
+      opener: '요즘 일교차 때문에 아침마다 뭐 입을지 고민이에요. 어떻게 하세요?', yes: '그 방법 저도 써볼게요.', no: '그래도 점심때는 좀 괜찮죠?', kw: ['날씨', '패션', '코디'] },
+    { id: 14, topic: '출퇴근길 루틴', category: '일상', description: '일상 리듬 확인',
+      opener: '출퇴근할 때 주로 뭐 하세요? 음악이나 팟캐스트 들으세요?', yes: '요즘 뭐 들으세요? 추천해 주세요.', no: '저도 멍하니 있을 때 많아요.', kw: ['음악', '팟캐스트', '출퇴근', '지하철'] },
+    { id: 15, topic: '요즘 듣는 음악', category: '문화', description: '취향 공유',
+      opener: '요즘 자주 듣는 노래 있어요? 플레이리스트를 새로 짜려고요.', yes: '어떤 분위기예요? 한번 들어볼게요.', no: '그럼 일할 때는 조용한 게 좋으세요?', kw: ['음악', '노래', '콘서트', '플레이리스트', '밴드', '가수'] },
+    { id: 16, topic: '최근 읽은 책', category: '문화', description: '가벼운 지적 호기심',
+      opener: '요즘 읽고 있는 책 있어요? 읽을 만한 걸 찾고 있어서요.', yes: '어떤 부분이 좋았어요?', no: '그럼 요즘은 짧은 글이나 영상이 편하세요?', kw: ['독서', '소설', '에세이', '도서', '글쓰기'] },
+    { id: 17, topic: '운동·걷기 습관', category: '건강', description: '생활 습관 확인',
+      opener: '요즘 점심 먹고 좀 걷는 분들 많던데, 따로 하시는 운동 있어요?', yes: '얼마나 하셨어요? 꾸준히 하기 어렵지 않아요?', no: '저도 계획만 세우고 있어요.', kw: ['운동', '헬스', '러닝', '달리기', '걷기', '수영', '요가', '등산', '골프'] },
+    { id: 18, topic: '캠핑·등산 같은 야외 활동', category: '여행', description: '주말 활동 확인',
+      opener: '날 좋을 때 캠핑이나 등산 가보셨어요?', yes: '어디가 제일 좋았어요?', no: '그럼 쉬는 날엔 집이 최고죠.', kw: ['캠핑', '등산', '낚시', '자전거', '야외'] },
+    { id: 19, topic: '게임 이야기', category: '취미', description: '취미 공감',
+      opener: '혹시 요즘 하시는 게임 있어요? 스트레스 풀 거 찾고 있어서요.', yes: '어떤 게임이에요? 초보도 할 만해요?', no: '저도 가끔 모바일로 가볍게만 해요.', kw: ['게임', '콘솔', '스팀', '닌텐도'] },
+    { id: 20, topic: '집밥·요리', category: '식음료', description: '일상 취향',
+      opener: '집에서 요리 자주 하세요? 간단한 레시피를 찾고 있어요.', yes: '제일 자신 있는 요리가 뭐예요?', no: '저도 간단한 것만 해요. 요즘은 뭐 시켜드세요?', kw: ['요리', '레시피', '베이킹', '집밥'] },
+    { id: 21, topic: '식물·인테리어', category: '일상', description: '공간 취향',
+      opener: '책상에 식물 두는 분들 많던데, 키워보신 적 있어요?', yes: '어떤 식물이에요? 키우기 쉬워요?', no: '저는 자꾸 죽여서 선인장만 도전하고 있어요.', kw: ['식물', '인테리어', '화분', '정리'] },
+    { id: 22, topic: '사진·카메라', category: '취미', description: '취미 공감',
+      opener: '요즘 폰 카메라가 좋아서 사진 많이 찍게 되잖아요. 자주 찍으세요?', yes: '주로 어떤 걸 찍으세요?', no: '저는 음식 사진만 찍어요.', kw: ['사진', '카메라', '촬영'] },
+    { id: 23, topic: '업무 효율 팁', category: '업무', description: '업무 공감',
+      opener: '혹시 일할 때 쓰는 단축키나 정리 팁 있어요? 저도 하나 배우고 싶어서요.', yes: '그거 저한테도 알려주세요.', no: '저도 아직 하나씩 익히는 중이에요.', kw: ['업무', '엑셀', '단축키', '효율', '생산성'] },
+    { id: 24, topic: '점심시간 활용', category: '일상', description: '휴식 스타일',
+      opener: '점심시간에 보통 뭐 하세요? 산책이나 낮잠 같은 거요.', yes: '그게 오후에 도움이 되던가요?', no: '저는 그냥 멍 때릴 때도 많아요.', kw: ['산책', '낮잠', '휴식'] },
+    { id: 25, topic: '주말 계획', category: '일상', description: '라이프스타일 가볍게 확인',
+      opener: '이번 주말에 뭐 하세요? 특별한 계획 있어요?', yes: '재밌겠다. 다녀오시면 후기 들려주세요.', no: '그럼 푹 쉬는 것도 좋죠.', kw: ['주말', '휴식', '나들이'] },
+    { id: 26, topic: '연휴·휴가 계획', category: '여행', description: '일정 공감',
+      opener: '다음 연휴나 휴가 계획 세우셨어요? 가고 싶은 데 있어요?', yes: '거기는 어떻게 찾으셨어요?', no: '저도 아직 못 정했어요. 쉬는 게 목적이라서요.', kw: ['여행', '휴가', '연휴', '해외'] },
+    { id: 27, topic: '요즘 보는 스포츠', category: '문화', description: '취향 확인',
+      opener: '요즘 보시는 경기 있어요? 야구나 축구 같은 거요.', yes: '응원하는 팀이 어디예요?', no: '저는 하이라이트만 챙겨봐요.', kw: ['야구', '축구', '농구', '스포츠', '배구'] },
+    { id: 28, topic: '새로 배우는 것', category: '자기계발', description: '성장 관심 확인',
+      opener: '요즘 새로 배워보고 싶은 게 있어요? 저도 뭔가 시작해볼까 고민 중이에요.', yes: '어떻게 시작하셨어요? 어렵지 않아요?', no: '저도 생각만 하는 중이에요.', kw: ['공부', '자격증', '학원', '자기계발', '영어', '언어'] },
+    { id: 29, topic: '수면·피로 관리', category: '건강', description: '공감대 형성',
+      opener: '요즘 피곤할 때 어떻게 푸세요? 저는 일찍 자는 게 제일 좋더라고요.', yes: '그 방법 저도 해볼게요.', no: '그래도 주말엔 좀 쉬시죠?', kw: ['수면', '피로', '휴식', '건강'] },
+    { id: 30, topic: '새로 나온 앱·서비스', category: '디지털', description: '기술 수용도 확인',
+      opener: '최근에 써보고 좋았던 앱 있어요? 폰 정리하다가 새로 찾고 있어서요.', yes: '어떤 점이 좋았어요?', no: '저도 쓰던 것만 계속 쓰게 되더라고요.', kw: ['디지털', '테크', '스마트폰', '앱', 'AI'] }
+  ];
+
+  // perf: 대화 성과 점수 (에너지와 별개)
+  var RESULT = {
+    success: { label: '성공', desc: '잘 풀렸어요', perf: 100, color: 'green', icon: 'shield' },
+    defense: { label: '방어', desc: '무난히 넘겼어요', perf: 60, color: 'blue', icon: 'message' },
+    crit: { label: '치명상', desc: '크게 꼬였어요', perf: 0, color: 'red', icon: 'skull' }
+  };
+
+  var ICONS = {
+    shield: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+    skull: '<circle cx="12" cy="11" r="8"/><path d="M9 21v-3M15 21v-3M12 21v-3"/><circle cx="9" cy="10" r="1"/><circle cx="15" cy="10" r="1"/>',
+    message: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
+    trending: '<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>',
+    plus: '<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>',
+    database: '<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>',
+    history: '<path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><polyline points="3 3 3 8 8 8"/><polyline points="12 7 12 12 15 15"/>',
+    zap: '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
+    x: '<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>'
+  };
+  var TAB_NAMES = { missions: '안전 주제', logs: '오답 노트', archive: '아카이브', report: '리포트' };
+  var TAB_ICON = { missions: 'shield', logs: 'history', archive: 'database', report: 'trending' };
+
+  /* ---------- 유틸 ---------- */
+  function icon(n, s) {
+    s = s || 20;
+    return '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ICONS[n] + '</svg>';
+  }
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function pad(n) { return String(n).padStart(2, '0'); }
+  function dstr(d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+  function todayStr() { return dstr(new Date()); }
+  function clamp(n) { return Math.max(0, Math.min(100, n)); }
+  function load(k, fb) {
+    try { var v = JSON.parse(localStorage.getItem(k)); return v == null ? fb : v; } catch (e) { return fb; }
+  }
+  function save(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+
+  /* ---------- 상태 ---------- */
+  var logs = load('ss_logs', []);
+  var people = load('ss_people', []);
+  var recover = load('ss_recover', {});
+  if (!Array.isArray(logs)) logs = [];
+  if (!Array.isArray(people)) people = [];
+  if (!recover || typeof recover !== 'object' || Array.isArray(recover)) recover = {};
+  var tab = 'missions';
+  var forPerson = null;
+
+  var app = document.getElementById('app');
+  var overlay = document.getElementById('overlay');
+  var importFile = document.getElementById('importFile');
+
+  function persist() { save('ss_logs', logs); save('ss_people', people); save('ss_recover', recover); }
+
+  /* ---------- 에너지 / 성과 ---------- */
+  function lvl(l) { var n = Number(l && l.energy); return n >= 1 && n <= 5 ? Math.round(n) : 2; } // 구버전 기록은 2단계로 간주
+  function cost(l) { return lvl(l) * 5; }
+  function energyNow() {
+    var t = todayStr();
+    var used = logs.filter(function (l) { return l.date === t; }).reduce(function (a, l) { return a + cost(l); }, 0);
+    return clamp(100 - used + (Number(recover[t]) || 0));
+  }
+  function perfToday() {
+    var t = todayStr();
+    var xs = logs.filter(function (l) { return l.date === t && RESULT[l.result]; });
+    if (!xs.length) return null;
+    return Math.round(xs.reduce(function (a, l) { return a + RESULT[l.result].perf; }, 0) / xs.length);
+  }
+
+  /* ---------- 미션 ---------- */
+  function missionById(id) { return ALL_MISSIONS.find(function (m) { return m.id === id; }); }
+  function dailyMissions() {
+    var t = todayStr(), ids = load('ss_daily_ids', []), d = null;
+    try { d = localStorage.getItem('ss_missions_date'); } catch (e) {}
+    var valid = Array.isArray(ids) && ids.length === 3 && ids.every(function (i) { return !!missionById(i); });
+    if (d !== t || !valid) {
+      var arr = ALL_MISSIONS.map(function (m) { return m.id; });
+      for (var i = arr.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var x = arr[i]; arr[i] = arr[j]; arr[j] = x; }
+      ids = arr.slice(0, 3);
+      save('ss_daily_ids', ids);
+      try { localStorage.setItem('ss_missions_date', t); } catch (e) {}
+    }
+    return ids.map(missionById);
+  }
+  function tagsOf(p) {
+    return String(p.interest || '').split(',').map(function (s) { return s.trim(); }).filter(function (s) { return s.length >= 2; });
+  }
+  // 관심사 태그 ↔ 주제 키워드 규칙 매칭 (AI 없이)
+  function matchFor(p) {
+    var tags = tagsOf(p), out = [];
+    ALL_MISSIONS.forEach(function (m) {
+      var score = 0, first = null;
+      tags.forEach(function (t) {
+        var hit = m.kw.some(function (k) { return k.toLowerCase().indexOf(t.toLowerCase()) > -1 || t.toLowerCase().indexOf(k.toLowerCase()) > -1; });
+        if (hit) { score++; if (!first) first = t; }
+      });
+      if (score) out.push({ m: m, tag: first, score: score });
+    });
+    out.sort(function (a, b) { return b.score - a.score || a.m.id - b.m.id; });
+    return out.slice(0, 3);
+  }
+  function missionCard(m, reason, pname) {
+    return '<div class="item"><div class="mh"><span class="cat">' + esc(m.category) + '</span>' + (reason ? '<span class="why">' + esc(reason) + '</span>' : '') + '</div>' +
+      '<h3>' + esc(m.topic) + '</h3><p>' + esc(m.description) + '</p>' +
+      '<details class="ex"><summary>대화 예시 보기</summary>' +
+      '<div class="ln"><b>첫마디</b><p>“' + esc(m.opener) + '”</p></div>' +
+      '<div class="ln"><b>관심을 보일 때</b><p>“' + esc(m.yes) + '”</p></div>' +
+      '<div class="ln"><b>관심이 없어 보일 때</b><p>“' + esc(m.no) + '”</p></div>' +
+      '<p class="h2" style="margin-top:12px">상대가 답을 피하면 바로 다른 주제로 넘어가세요. 사생활이나 업무 기밀은 묻지 않는 게 안전해요.</p></details>' +
+      '<button class="use" data-a="use-mission" data-v="' + esc(m.topic) + '" data-p="' + esc(pname || '') + '">이 주제로 기록하기</button></div>';
+  }
+
+  function personStats(name) {
+    var mine = logs.filter(function (l) { return l.colleague === name; });
+    var ok = mine.filter(function (l) { return l.result === 'success'; }).length;
+    return { n: mine.length, rate: mine.length ? Math.round(ok / mine.length * 100) : 0 };
+  }
+
+  /* ---------- 리포트 ---------- */
+  function lastDays(n) {
+    var out = [];
+    for (var i = n - 1; i >= 0; i--) {
+      var d = new Date(); d.setDate(d.getDate() - i);
+      out.push({ date: dstr(d), wd: '일월화수목금토'.charAt(d.getDay()), today: i === 0 });
+    }
+    return out;
+  }
+  function reportHtml() {
+    var days = lastDays(7), set = {};
+    days.forEach(function (d) { set[d.date] = 1; });
+    var wk = logs.filter(function (l) { return set[l.date]; });
+    if (!wk.length) return '<p class="empty">최근 7일 기록이 없어요.<br>기록이 쌓이면 소모가 큰 날과 사람을 알려드려요.</p>';
+
+    var per = days.map(function (d) {
+      var xs = wk.filter(function (l) { return l.date === d.date; });
+      return { d: d, n: xs.length, c: xs.reduce(function (a, l) { return a + cost(l); }, 0) };
+    });
+    var total = per.reduce(function (a, x) { return a + x.c; }, 0);
+    var active = per.filter(function (x) { return x.n > 0; }).length;
+    var succ = wk.filter(function (l) { return l.result === 'success'; }).length;
+    var crit = wk.filter(function (l) { return l.result === 'crit'; }).length;
+    var peak = per.slice().sort(function (a, b) { return b.c - a.c; })[0];
+    var noNext = wk.filter(function (l) { return l.result !== 'success' && !String(l.next || '').trim(); }).length;
+
+    var h = '<div class="kpis">' +
+      '<div class="kpi"><b>' + wk.length + '건</b><span>최근 7일 기록</span></div>' +
+      '<div class="kpi"><b>' + Math.round(succ / wk.length * 100) + '%</b><span>성공률</span></div>' +
+      '<div class="kpi"><b>−' + Math.round(total / active) + '</b><span>기록한 날 평균 에너지 소모</span></div>' +
+      '<div class="kpi"><b>' + crit + '건</b><span>치명상</span></div></div>';
+
+    h += '<div class="rep"><h3>하루 에너지 소모</h3>';
+    per.forEach(function (x) {
+      h += '<div class="brow" title="' + esc(x.d.date) + ' 소모 ' + x.c + '"><span class="bl' + (x.d.today ? ' td' : '') + '">' + x.d.wd + '</span>' +
+        '<div class="bt"><div class="bf" style="width:' + Math.min(100, x.c) + '%"></div></div><span class="bv">' + (x.c ? '−' + x.c : '—') + '</span></div>';
+    });
+    h += '<p class="h2" style="margin-top:6px">맨 오른쪽이 오늘이에요. 100이 하루 예산이에요.</p></div>';
+
+    h += '<div class="rep"><h3>이번 주 한눈에</h3>';
+    if (peak && peak.c > 0) h += '<p class="ins">가장 소모가 컸던 날은 ' + peak.d.wd + '요일(−' + peak.c + ')이에요.</p>';
+    if (noNext > 0) h += '<p class="ins">방어·치명상 기록 ' + noNext + '건에 \'다음에 시도할 말\'이 비어 있어요. 오답 노트에서 채워두면 아래 복습 카드가 돼요.</p>';
+    if (crit === 0) h += '<p class="ins">이번 주엔 치명상이 없었어요.</p>';
+    h += '</div>';
+
+    var byP = {};
+    wk.forEach(function (l) {
+      var o = byP[l.colleague] || (byP[l.colleague] = { name: l.colleague, n: 0, c: 0, s: 0 });
+      o.n++; o.c += cost(l); if (l.result === 'success') o.s++;
+    });
+    var plist = Object.keys(byP).map(function (k) { return byP[k]; }).sort(function (a, b) { return b.c - a.c; }).slice(0, 3);
+    h += '<div class="rep"><h3>에너지를 많이 쓴 상대 TOP ' + plist.length + '</h3>';
+    plist.forEach(function (p) {
+      h += '<div class="prow"><div>' + esc(p.name) + '</div><span>기록 ' + p.n + '건 · −' + p.c + ' · 성공률 ' + Math.round(p.s / p.n * 100) + '%</span></div>';
+    });
+    h += '</div>';
+
+    var rv = logs.filter(function (l) { return String(l.next || '').trim(); })
+      .sort(function (a, b) { return (b.date || '').localeCompare(a.date || '') || b.id - a.id; }).slice(0, 5);
+    if (rv.length) {
+      h += '<div class="rep"><h3>복습 카드: 다음에 시도할 말</h3>';
+      rv.forEach(function (l) { h += '<div class="rv"><b>' + esc(l.colleague) + ' · ' + esc(l.topic) + '</b><p>“' + esc(l.next) + '”</p></div>'; });
+      h += '</div>';
+    }
+    return h;
+  }
+
+  /* ---------- 렌더 ---------- */
+  function render() {
+    var e = energyNow(), low = e <= 40, pf = perfToday(), rec = Number(recover[todayStr()]) || 0;
+    var h = '<header><div><h1>SOCIAL SHIELD <span class="ver">v2.8.1</span></h1><p class="sub">대화 에너지를 지키는 기록장</p></div><div class="badge-ic">' + icon('shield') + '</div></header>';
+
+    h += '<div class="card"><div class="bg">' + icon('zap', 80) + '</div>';
+    h += '<div class="row"><span class="lbl">오늘의 에너지</span><span class="pct" style="color:' + (low ? 'var(--orange)' : 'var(--green)') + '">' + e + '%</span></div>';
+    h += '<div class="bar"><div class="fill" style="width:' + e + '%;background:' + (low ? 'var(--orange)' : 'var(--ind)') + '"></div></div>';
+    h += '<div class="row2"><span class="lbl">오늘의 대화 성과</span><span class="pf">' + (pf == null ? '—' : pf + '점') + '</span></div>';
+    h += '<div class="bar thin"><div class="fill" style="width:' + (pf == null ? 0 : pf) + '%;background:var(--blue)"></div></div>';
+    h += '<div class="chips"><span class="chip i">기록 ' + logs.length + '</span><span class="chip e">인물 ' + people.length + '</span>' +
+      '<button class="chip g" data-a="recover">☕ 회복 +10</button>' +
+      (rec > 0 ? '<button class="chip g" data-a="recover-reset">오늘 회복 +' + rec + ' ✕</button>' : '') + '</div>';
+    h += '<p class="hint">에너지는 매일 100%에서 시작해서 대화 강도(5~25%)만큼 줄어요. 성과는 오늘 결과의 평균이에요(성공 100 · 방어 60 · 치명상 0). 두 값은 따로 움직여요.</p></div>';
+
+    h += backupWarn();
+    h += '<div class="tabs">';
+    ['missions', 'logs', 'archive', 'report'].forEach(function (t) {
+      h += '<button class="tab' + (tab === t ? ' on' : '') + '" data-a="tab" data-v="' + t + '">' + icon(TAB_ICON[t], 16) + TAB_NAMES[t] + '</button>';
+    });
+    h += '</div><div class="list">';
+
+    if (tab === 'missions') {
+      var fp = forPerson ? people.find(function (p) { return p.id === forPerson; }) : null;
+      h += '<div class="selbox"><label for="forPerson">누구와 대화할 건가요?</label><select id="forPerson"><option value="">선택 안 함 (오늘의 주제)</option>' +
+        people.map(function (p) { return '<option value="' + p.id + '"' + (fp && fp.id === p.id ? ' selected' : '') + '>' + esc(p.name) + '</option>'; }).join('') + '</select></div>';
+      if (fp) {
+        var ms = matchFor(fp);
+        if (ms.length) {
+          h += '<p class="sec">' + esc(fp.name) + '님 관심사 맞춤 주제</p>';
+          ms.forEach(function (x) { h += missionCard(x.m, '#' + x.tag + ' 와 연결', fp.name); });
+        } else {
+          h += '<p class="empty small">' + (tagsOf(fp).length ? '관심사와 맞는 주제가 아직 없어요.' : '아카이브에서 관심사를 등록하면 맞춤 주제를 추천해요.') + '</p>';
+        }
+        h += '<p class="sec">오늘의 주제</p>';
+      }
+      dailyMissions().forEach(function (m) { h += missionCard(m, '', fp ? fp.name : ''); });
+    }
+
+    if (tab === 'logs') {
+      if (!logs.length) {
+        h += '<p class="empty">아직 기록된 로그가 없어요.<br>아래 버튼으로 첫 기록을 남겨보세요.</p>';
+      } else {
+        logs.slice().sort(function (a, b) { return (b.date || '').localeCompare(a.date || '') || b.id - a.id; }).forEach(function (l) {
+          var r = RESULT[l.result] || RESULT.defense;
+          h += '<button class="item log" data-a="edit-log" data-v="' + l.id + '"><div class="lic ' + r.color + '">' + icon(r.icon) + '</div>' +
+            '<div class="lbody"><div class="lt"><h4>' + esc(l.colleague) + '</h4><span class="date">' + esc(l.date) + '</span></div>' +
+            '<div class="lt"><p class="topic">' + esc(l.topic) + '</p><span class="delta">에너지 −' + cost(l) + '</span></div>' +
+            (String(l.next || '').trim() ? '<p class="topic nx">다음엔: ' + esc(l.next) + '</p>' : '') + '</div></button>';
+        });
+      }
+    }
+
+    if (tab === 'archive') {
+      h += '<button class="btn pri top" data-a="add-person">+ 인물 추가</button>';
+      if (!people.length) h += '<p class="empty">아직 등록된 인물이 없어요.<br>위 버튼으로 추가하거나, 기록을 남기면 자동으로 만들어져요.</p>';
+      people.forEach(function (p) {
+        var st = personStats(p.name), tags = tagsOf(p);
+        h += '<button class="item" data-a="edit-person" data-v="' + p.id + '">' +
+          '<div class="ph"><h3>' + esc(p.name) + '</h3><div class="pp">' + icon('trending', 12) + ' ' + Number(p.pingpong || 0).toFixed(1) + '</div></div>' +
+          (tags.length ? '<div class="tags">' + tags.map(function (t) { return '<span class="tag">#' + esc(t) + '</span>'; }).join('') + '</div>' : '') +
+          (p.note ? '<div class="note">"' + esc(p.note) + '"</div>' : '') +
+          '<p class="stat">기록 ' + st.n + '건 · 성공률 ' + st.rate + '%</p></button>';
+      });
+      h += '<div class="rep"><h3>백업</h3><p class="h2" style="margin:-6px 0 12px">' + backupLabel() + '</p>' +
+        '<div class="bk" style="margin-top:0"><button class="btn" data-a="export">텍스트(JSON) 백업</button><button class="btn" data-a="export-csv">엑셀용 CSV</button></div>' +
+        '<button class="btn" data-a="import" style="margin-top:10px">백업 불러오기 (JSON·CSV)</button>' +
+        '<p class="h2" style="margin-top:12px;line-height:1.5">JSON은 가장 가볍고 완전히 복원돼요. CSV는 엑셀에서 열어 보거나 고칠 때 쓰고, 고친 뒤에는 "CSV UTF-8"로 저장해서 불러오세요.</p></div>';
+    }
+
+    if (tab === 'report') h += reportHtml();
+
+    h += '</div>';
+    h += '<div class="fab"><button data-a="add-log"><div class="fl"><div class="fp">' + icon('plus', 24) + '</div><div><p class="fs">대화 기록</p><p class="ft">피드백 기록하기</p></div></div>' + icon('zap') + '</button></div>';
+    app.innerHTML = h;
+  }
+
+  /* ---------- 모달 ---------- */
+  function openSheet(inner) {
+    overlay.innerHTML = '<div class="sheet">' + inner + '</div>';
+    overlay.hidden = false;
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() { overlay.hidden = true; overlay.innerHTML = ''; document.body.style.overflow = ''; }
+
+  function openLogModal(id, presetTopic, presetName) {
+    var l = id ? logs.find(function (x) { return x.id === id; }) : null;
+    var cur = l ? l.result : '';          // 새 기록은 결과를 직접 선택해야 해요
+    var en = l ? lvl(l) : 2;
+    var hasNote = l && (l.said || l.mine || l.reaction || l.next);
+    var h = '<div class="sh"><h2>' + (l ? '기록 수정' : '피드백 기록') + '</h2><button class="x" data-a="close" aria-label="닫기">' + icon('x') + '</button></div>';
+    h += '<form id="logForm" data-id="' + (l ? l.id : '') + '">';
+    h += '<div class="f"><label>이름</label><input name="name" list="plist" maxlength="30" autocomplete="off" required placeholder="이름을 입력하세요" value="' + esc(l ? l.colleague : (presetName || '')) + '">' +
+      '<datalist id="plist">' + people.map(function (p) { return '<option value="' + esc(p.name) + '">'; }).join('') + '</datalist></div>';
+    h += '<div class="f"><label>대화 주제</label><input name="topic" maxlength="80" required placeholder="어떤 주제로 대화했나요?" value="' + esc(l ? l.topic : (presetTopic || '')) + '"></div>';
+    h += '<div class="f"><label>날짜</label><input type="date" name="date" required value="' + esc(l ? l.date : todayStr()) + '"></div>';
+    h += '<div class="f"><label>결과 (필수)</label><input type="hidden" name="result" value="' + esc(cur) + '"><div class="rs">';
+    Object.keys(RESULT).forEach(function (k) {
+      var r = RESULT[k];
+      h += '<button type="button" class="rb ' + r.color + (cur === k ? ' on' : '') + '" data-a="pick" data-v="' + k + '">' + icon(r.icon, 24) + '<span>' + r.label + '</span><small>' + r.desc + '</small></button>';
+    });
+    h += '</div></div><p class="err" id="logErr" hidden>결과를 하나 선택해 주세요.</p>';
+    h += '<div class="f"><label>소모 에너지 (이 대화가 얼마나 힘들었나요?)</label><div class="rng"><input type="range" name="energy" min="1" max="5" step="1" value="' + en + '"><output id="env">' + en + '단계 −' + (en * 5) + '%</output></div><p class="h2">1 가벼운 인사 · 3 보통 · 5 매우 지침</p></div>';
+    h += '<details class="nb"' + (hasNote ? ' open' : '') + '><summary>오답 노트 쓰기 (선택)</summary>' +
+      '<div class="f"><label>상대가 한 말·상황</label><textarea name="said" maxlength="200" placeholder="어떤 상황이었나요?">' + esc(l ? l.said : '') + '</textarea></div>' +
+      '<div class="f"><label>내가 한 말</label><textarea name="mine" maxlength="200">' + esc(l ? l.mine : '') + '</textarea></div>' +
+      '<div class="f"><label>상대 반응</label><input name="reaction" maxlength="120" value="' + esc(l ? l.reaction : '') + '"></div>' +
+      '<div class="f"><label>다음에 시도할 말</label><textarea name="next" maxlength="200" placeholder="같은 상황이 오면 이렇게 말해볼래요">' + esc(l ? l.next : '') + '</textarea></div></details>';
+    h += '<div class="btns">';
+    if (l) h += '<button type="button" class="btn dan" data-a="del-log" data-v="' + l.id + '">삭제</button>';
+    h += '<button type="submit" class="btn pri">' + (l ? '수정 저장' : '데이터 저장') + '</button></div></form>';
+    openSheet(h);
+  }
+
+  function openPersonModal(id) {
+    var p = id ? people.find(function (x) { return x.id === id; }) : null;
+    var pp = p ? Number(p.pingpong || 0) : 5;
+    var h = '<div class="sh"><h2>' + (p ? '인물 수정' : '인물 추가') + '</h2><button class="x" data-a="close" aria-label="닫기">' + icon('x') + '</button></div>';
+    h += '<form id="personForm" data-id="' + (p ? p.id : '') + '">';
+    h += '<div class="f"><label>이름</label><input name="name" maxlength="30" required placeholder="예: 김 대리" value="' + esc(p ? p.name : '') + '"></div>';
+    h += '<div class="f"><label>관심사 (쉼표로 구분 · 맞춤 주제 추천에 쓰여요)</label><input name="interest" maxlength="100" placeholder="예: 고양이, 다이어트" value="' + esc(p ? p.interest : '') + '"></div>';
+    h += '<div class="f"><label>대화 핑퐁 점수</label><div class="rng"><input type="range" name="pingpong" min="0" max="10" step="0.5" value="' + pp + '"><output id="ppv">' + pp.toFixed(1) + '</output></div></div>';
+    h += '<div class="f"><label>메모</label><textarea name="note" maxlength="200" placeholder="이 사람에 대해 기억할 점">' + esc(p ? p.note : '') + '</textarea></div>';
+    h += '<div class="btns">';
+    if (p) h += '<button type="button" class="btn dan" data-a="del-person" data-v="' + p.id + '">삭제</button>';
+    h += '<button type="submit" class="btn pri">' + (p ? '수정 저장' : '추가') + '</button></div></form>';
+    openSheet(h);
+  }
+
+  /* ---------- 저장 ---------- */
+  function saveLog(f) {
+    var fd = new FormData(f);
+    var name = String(fd.get('name') || '').trim(), topic = String(fd.get('topic') || '').trim();
+    if (!name || !topic) return;
+    var result = String(fd.get('result') || '');
+    if (!RESULT[result]) { var er = document.getElementById('logErr'); if (er) er.hidden = false; return; }
+    var editId = f.dataset.id ? Number(f.dataset.id) : null;
+    var en = Math.max(1, Math.min(5, Number(fd.get('energy')) || 2));
+    var rec = {
+      id: editId || Date.now(), date: fd.get('date') || todayStr(), colleague: name, topic: topic, result: result, energy: en,
+      said: String(fd.get('said') || '').trim(), mine: String(fd.get('mine') || '').trim(),
+      reaction: String(fd.get('reaction') || '').trim(), next: String(fd.get('next') || '').trim()
+    };
+    if (editId) logs = logs.map(function (l) { return l.id === editId ? rec : l; });
+    else logs = [rec].concat(logs);
+    if (!people.some(function (p) { return p.name === name; })) {
+      people.push({ id: Date.now() + 1, name: name, interest: '', pingpong: 5, note: '' });
+    }
+    persist(); closeModal(); render();
+  }
+
+  function savePerson(f) {
+    var fd = new FormData(f);
+    var name = String(fd.get('name') || '').trim();
+    if (!name) return;
+    var editId = f.dataset.id ? Number(f.dataset.id) : null;
+    if (people.some(function (p) { return p.name === name && p.id !== editId; })) { alert('이미 같은 이름의 인물이 있어요.'); return; }
+    var data = { name: name, interest: String(fd.get('interest') || '').trim(), pingpong: Number(fd.get('pingpong')) || 0, note: String(fd.get('note') || '').trim() };
+    if (editId) {
+      var old = people.find(function (p) { return p.id === editId; });
+      if (old && old.name !== name) logs = logs.map(function (l) { return l.colleague === old.name ? Object.assign({}, l, { colleague: name }) : l; });
+      people = people.map(function (p) { return p.id === editId ? Object.assign({}, p, data) : p; });
+    } else {
+      people = people.concat([Object.assign({ id: Date.now() }, data)]);
+    }
+    persist(); closeModal(); render();
+  }
+
+  /* ---------- 백업 ---------- */
+  function backupDays() {
+    var ts = Number(load('ss_last_backup', 0)) || 0;
+    return ts ? Math.floor((Date.now() - ts) / 86400000) : null;
+  }
+  function backupLabel() {
+    var d = backupDays();
+    return d == null ? '아직 백업한 적이 없어요' : d <= 0 ? '마지막 백업: 오늘' : '마지막 백업: ' + d + '일 전';
+  }
+  function backupWarn() {
+    var d = backupDays();
+    var need = (d == null && logs.length >= 5) || (d != null && d >= 14 && logs.length + people.length > 0);
+    return need ? '<p class="warn">⚠ ' + (d == null ? '아직 백업한 적이 없어요.' : '백업한 지 ' + d + '일 지났어요.') + ' 아카이브 탭 아래에서 백업해 두세요.</p>' : '';
+  }
+
+  function download(name, blob) {
+    var url = URL.createObjectURL(blob), a = document.createElement('a');
+    a.href = url; a.download = name;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+    save('ss_last_backup', Date.now());
+    render();
+  }
+
+  // 텍스트(JSON): 들여쓰기·줄바꿈 없이 최소 크기, 완전 복원용
+  function exportData() {
+    download('social-shield-backup-' + todayStr() + '.json',
+      new Blob([JSON.stringify({ app: 'social-shield', version: '2.8.1', exportedAt: new Date().toISOString(), logs: logs, people: people, recover: recover })], { type: 'application/json' }));
+  }
+
+  // 엑셀용 CSV: 한 파일에 기록·인물·회복을 '구분' 열로 나눠 담아요 (UTF-8 BOM, 엑셀에서 한글 정상 표시)
+  var CSV_HEAD = ['구분', '날짜', '이름', '주제', '결과', '에너지', '상대가 한 말', '내가 한 말', '상대 반응', '다음에 시도할 말', '관심사', '핑퐁점수', '메모'];
+  function csvCell(v) {
+    var s = String(v == null ? '' : v);
+    if (/^[=+\-@\t\r]/.test(s)) s = "'" + s;           // 엑셀 수식 실행 방지
+    return /[",\r\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+  }
+  function unq(s) { return /^'[=+\-@\t\r]/.test(s) ? s.slice(1) : s; }
+  function exportCsv() {
+    var rows = [CSV_HEAD];
+    logs.forEach(function (l) {
+      rows.push(['기록', l.date, l.colleague, l.topic, (RESULT[l.result] || RESULT.defense).label, lvl(l), l.said || '', l.mine || '', l.reaction || '', l.next || '', '', '', '']);
+    });
+    people.forEach(function (p) {
+      rows.push(['인물', '', p.name, '', '', '', '', '', '', '', p.interest || '', p.pingpong, p.note || '']);
+    });
+    Object.keys(recover).sort().forEach(function (d) {
+      rows.push(['회복', d, '', '', '', recover[d], '', '', '', '', '', '', '']);
+    });
+    var text = '﻿' + rows.map(function (r) { return r.map(csvCell).join(','); }).join('\r\n') + '\r\n';
+    download('social-shield-' + todayStr() + '.csv', new Blob([text], { type: 'text/csv;charset=utf-8' }));
+  }
+  function parseCsv(t) {
+    var rows = [], row = [], f = '', q = false, i = 0, c;
+    if (t.charCodeAt(0) === 0xFEFF) t = t.slice(1);
+    for (; i < t.length; i++) {
+      c = t.charAt(i);
+      if (q) {
+        if (c === '"') { if (t.charAt(i + 1) === '"') { f += '"'; i++; } else q = false; }
+        else f += c;
+      } else if (c === '"') q = true;
+      else if (c === ',') { row.push(f); f = ''; }
+      else if (c === '\n' || c === '\r') {
+        if (c === '\r' && t.charAt(i + 1) === '\n') i++;
+        row.push(f); f = ''; rows.push(row); row = [];
+      } else f += c;
+    }
+    if (f !== '' || row.length) { row.push(f); rows.push(row); }
+    return rows.filter(function (r) { return r.some(function (x) { return x !== ''; }); });
+  }
+  function normDate(s) {   // 엑셀이 2026/10/8 처럼 바꿔 저장해도 읽어요
+    var m = String(s).trim().match(/^(\d{4})[-\/.]\s*(\d{1,2})[-\/.]\s*(\d{1,2})/);
+    return m ? m[1] + '-' + pad(+m[2]) + '-' + pad(+m[3]) : null;
+  }
+  function importCsv(text) {
+    if (text.indexOf('�') > -1) { alert('글자가 깨졌어요. 엑셀에서 "CSV UTF-8"로 저장한 파일만 불러올 수 있어요.'); return; }
+    var rows = parseCsv(text), head = rows.shift() || [], ix = {};
+    head.forEach(function (n, i) { ix[String(n).replace(/^﻿/, '').trim()] = i; });
+    if (ix['구분'] == null) { alert('이 앱에서 내보낸 CSV 형식이 아니에요.'); return; }
+    var g = function (r, n) { var i = ix[n]; return i == null ? '' : unq(String(r[i] == null ? '' : r[i])); };
+    var key = {}; Object.keys(RESULT).forEach(function (k) { key[RESULT[k].label] = k; });
+    var L = [], P = [], R = {}, skipped = 0, base = Date.now();
+    rows.forEach(function (r) {
+      var kind = g(r, '구분').trim();
+      if (kind === '기록') {
+        var d = normDate(g(r, '날짜')), res = key[g(r, '결과').trim()], name = g(r, '이름').trim(), topic = g(r, '주제').trim();
+        if (!d || !res || !name || !topic) { skipped++; return; }
+        L.push({ id: 0, date: d, colleague: name, topic: topic, result: res, energy: Math.max(1, Math.min(5, Math.round(Number(g(r, '에너지'))) || 2)),
+          said: g(r, '상대가 한 말'), mine: g(r, '내가 한 말'), reaction: g(r, '상대 반응'), next: g(r, '다음에 시도할 말') });
+      } else if (kind === '인물') {
+        var pn = g(r, '이름').trim();
+        if (!pn || P.some(function (p) { return p.name === pn; })) { skipped++; return; }
+        P.push({ id: base + 100000 + P.length, name: pn, interest: g(r, '관심사'), pingpong: Math.max(0, Math.min(10, Number(g(r, '핑퐁점수')) || 0)), note: g(r, '메모') });
+      } else if (kind === '회복') {
+        var rd = normDate(g(r, '날짜')), rv = Number(g(r, '에너지'));
+        if (rd && isFinite(rv) && rv > 0) R[rd] = Math.min(100, rv); else skipped++;
+      } else skipped++;
+    });
+    if (!L.length && !P.length) { alert('불러올 데이터가 없어요.'); return; }
+    if (!confirm('기록 ' + L.length + '건, 인물 ' + P.length + '명으로 현재 데이터를 덮어쓸까요?' + (skipped ? '\n(읽지 못한 줄 ' + skipped + '개는 건너뜀)' : ''))) return;
+    L.forEach(function (l, i) { l.id = base + (L.length - i); });   // 파일 순서(최신순) 유지
+    L.forEach(function (l) {
+      if (!P.some(function (p) { return p.name === l.colleague; })) P.push({ id: base + 200000 + P.length, name: l.colleague, interest: '', pingpong: 5, note: '' });
+    });
+    logs = L; people = P; recover = R;
+    persist(); render();
+  }
+  function importData(file) {
+    var rd = new FileReader();
+    rd.onload = function () {
+      try {
+        var d = JSON.parse(rd.result);
+        if (!d || !Array.isArray(d.logs) || !Array.isArray(d.people)) throw new Error('bad');
+        if (!confirm('현재 데이터를 백업 파일 내용으로 덮어쓸까요?')) return;
+        logs = d.logs.map(function (l, i) {
+          return {
+            id: Number(l.id) || Date.now() + i, date: String(l.date || todayStr()), colleague: String(l.colleague || ''), topic: String(l.topic || ''),
+            result: RESULT[l.result] ? l.result : 'defense', energy: Math.max(1, Math.min(5, Number(l.energy) || 2)),
+            said: String(l.said || ''), mine: String(l.mine || ''), reaction: String(l.reaction || ''), next: String(l.next || '')
+          };
+        });
+        people = d.people.map(function (p, i) {
+          return { id: Number(p.id) || Date.now() + i, name: String(p.name || ''), interest: String(p.interest || ''), pingpong: Number(p.pingpong) || 0, note: String(p.note || '') };
+        });
+        var rc = {};
+        if (d.recover && typeof d.recover === 'object' && !Array.isArray(d.recover)) {
+          Object.keys(d.recover).forEach(function (k) { var v = Number(d.recover[k]); if (isFinite(v) && v > 0) rc[String(k)] = Math.min(100, v); });
+        }
+        recover = rc;
+        persist(); render();
+      } catch (e) { alert('올바른 백업 파일이 아니에요.'); }
+    };
+    rd.readAsText(file);
+  }
+
+  /* ---------- 이벤트 ---------- */
+  document.addEventListener('click', function (e) {
+    if (e.target === overlay) { closeModal(); return; }
+    var el = e.target.closest('[data-a]');
+    if (!el) return;
+    var a = el.dataset.a, v = el.dataset.v;
+    if (a === 'tab') { tab = v; render(); }
+    else if (a === 'add-log') openLogModal(null);
+    else if (a === 'use-mission') openLogModal(null, v, el.dataset.p);
+    else if (a === 'edit-log') openLogModal(Number(v));
+    else if (a === 'add-person') openPersonModal(null);
+    else if (a === 'edit-person') openPersonModal(Number(v));
+    else if (a === 'close') closeModal();
+    else if (a === 'pick') {
+      var form = el.closest('form');
+      form.querySelector('input[name=result]').value = v;
+      form.querySelectorAll('.rb').forEach(function (b) { b.classList.toggle('on', b === el); });
+      var er = document.getElementById('logErr'); if (er) er.hidden = true;
+    }
+    else if (a === 'recover') { var t = todayStr(); recover[t] = Math.min(100, (Number(recover[t]) || 0) + 10); persist(); render(); }
+    else if (a === 'recover-reset') { delete recover[todayStr()]; persist(); render(); }
+    else if (a === 'del-log') {
+      if (confirm('이 기록을 삭제할까요?')) { logs = logs.filter(function (l) { return l.id !== Number(v); }); persist(); closeModal(); render(); }
+    }
+    else if (a === 'del-person') {
+      if (confirm('인물 카드를 삭제할까요? 이 사람의 기록은 오답 노트에 남아요.')) {
+        people = people.filter(function (p) { return p.id !== Number(v); });
+        if (forPerson === Number(v)) forPerson = null;
+        persist(); closeModal(); render();
+      }
+    }
+    else if (a === 'export') exportData();
+    else if (a === 'export-csv') exportCsv();
+    else if (a === 'import') importFile.click();
+  });
+
+  document.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (e.target.id === 'logForm') saveLog(e.target);
+    else if (e.target.id === 'personForm') savePerson(e.target);
+  });
+
+  document.addEventListener('input', function (e) {
+    if (e.target.name === 'pingpong') document.getElementById('ppv').textContent = Number(e.target.value).toFixed(1);
+    if (e.target.name === 'energy') { var n = Number(e.target.value); document.getElementById('env').textContent = n + '단계 −' + (n * 5) + '%'; }
+  });
+
+  document.addEventListener('change', function (e) {
+    if (e.target.id === 'forPerson') { forPerson = e.target.value ? Number(e.target.value) : null; render(); }
+  });
+
+  importFile.addEventListener('change', function () {
+    var f = importFile.files && importFile.files[0];
+    if (f) {
+      if (f.size > 5 * 1024 * 1024) alert('파일이 너무 커요(5MB 초과).');
+      else if (/\.csv$/i.test(f.name)) { var rd = new FileReader(); rd.onload = function () { importCsv(String(rd.result)); }; rd.readAsText(f, 'UTF-8'); }
+      else importData(f);
+    }
+    importFile.value = '';
+  });
+
+  render();
+})();
+</script>
 </body>
 </html>
